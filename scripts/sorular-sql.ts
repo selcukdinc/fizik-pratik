@@ -2,12 +2,19 @@
 // Kullanım: npm run sorular:sql -- migrations/0002_sorular.sql
 // Upsert kullanır: aynı kimlikli soru varsa günceller, eski denemeler korunur.
 // Yönetim panelinde değiştirilmiş sorulara (updated_at dolu) dokunulmaz.
+//
+// Yayındaki veritabanında yalnız metinleri yenilemek için:
+//   npm run sorular:sql -- --metin migrations/000N_....sql
+// Bu kip yalnız soru metni, şıklar ve çözümü günceller (UPDATE ... WHERE updated_at IS NULL);
+// yeni soru eklemez, active'e ve cevaplara dokunmaz.
 import { writeFileSync } from "node:fs";
 import { konular, sorular } from "../content/sorular/index.ts";
 import { KAVRAMLAR } from "../shared/kavramlar.ts";
 import { aciklamaMetni, type Soru } from "../content/sorular/tipler.ts";
 
-const hedef = process.argv[2];
+const argumanlar = process.argv.slice(2);
+const yalnizMetin = argumanlar.includes("--metin");
+const hedef = argumanlar.find((a) => !a.startsWith("--"));
 if (!hedef) {
   console.error("hedef dosya verilmedi");
   process.exit(1);
@@ -42,6 +49,22 @@ for (const s of sorular) {
   if (!KAVRAMLAR[s.kavram]) throw new Error(`${s.id}: kavramı yok (shared/kavramlar.ts)`);
   if (!s.etiketler.length) throw new Error(`${s.id}: etiketi yok`);
   if (aciklamaMetni(s).length > 4000) throw new Error(`${s.id}: açıklama 4000 karakteri aşıyor (yönetim paneli sınırı)`);
+}
+
+if (yalnizMetin) {
+  const guncellemeler = [
+    "-- Bu dosya scripts/sorular-sql.ts --metin ile content/sorular'dan üretildi, elle düzenlemeyin.",
+    "-- Yalnız soru metni, şıklar ve çözüm güncellenir; panelde değiştirilmiş sorulara dokunulmaz.",
+    "",
+    ...sorular.map(
+      (s) =>
+        `UPDATE questions SET prompt = ${q(md(s.soru))}, payload = ${q(JSON.stringify(payload(s)))}, ` +
+        `explanation = ${q(md(aciklamaMetni(s)))}\n  WHERE id = ${q(s.id)} AND updated_at IS NULL;`,
+    ),
+  ];
+  writeFileSync(hedef, guncellemeler.join("\n") + "\n");
+  console.log(`${hedef}: ${sorular.length} sorunun metni`);
+  process.exit(0);
 }
 
 const satirlar: string[] = [

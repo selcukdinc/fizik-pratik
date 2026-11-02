@@ -13,6 +13,7 @@ Her sorunun çözümü adım adım anlatılır.
   - `Sunu`: ders sunularındaki çözümlü örnekler, sunudaki metinleriyle. Çok parçalı örnekler parça parça sorulur.
   - `Türetilmiş`: aynı kalıptan ve aynı konulardan kendi cümlelerimizle yazılmış sorular.
 - **Adım adım çözüm:** Önce çözümün fikri, sonra adımlar. Adımlar tek tek açılır; öğrenci bir sonrakini açmadan önce kendisi bulmayı dener.
+- **Okunaklı formüller:** Bütün formüller KaTeX ile ders kitabı düzeninde dizilir: kesirler, kökler, vektör okları, birim vektörler ve uzun hesaplar ayrı satırda.
 - **Şekilli sorular:** Eğik atış, eğik düzlem, makara gibi sorular şekilleriyle gelir (SVG; açık ve koyu temaya uyar).
 - **Soru havuzu:** Ünite ünite, sunu sırasıyla ya da karışık.
 - **Aralıklı tekrar:** Yanlış yaptığın sorular 1, 3, 7, 14 ve 30 gün arayla yeniden gelir.
@@ -42,7 +43,11 @@ npm test
 ```
 
 Sorular `content/sorular/unite-N.ts` dosyalarındadır. Değiştirdikten sonra
-`npm run sorular:sql -- migrations/NNNN_ad.sql` ile yeni bir migration üret.
+`npm run sorular:sql -- migrations/NNNN_ad.sql` ile yeni bir migration üret. Yayındaki
+sorularda yalnız metin değiştiyse `npm run sorular:sql -- --metin migrations/NNNN_ad.sql`
+yalnız metni, şıkları ve çözümü güncelleyen bir migration üretir.
+Formüller LaTeX ile yazılır: satır içi `$…$`, ayrı satırda `$$…$$` (ayrıntı `CLAUDE.md`'de);
+`src/lib/matematik.test.ts` her formülün KaTeX'te derlendiğini denetler.
 Soru şekilleri `src/gorseller/sorular.ts` içinde SVG olarak çizilir; soruda tek başına
 bir paragraf olarak `[[G-S5-01]]` yazılır.
 

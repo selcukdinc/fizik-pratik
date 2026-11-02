@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Markdown } from "./Markdown";
+import { satirSonlari } from "../lib/matematik";
 
 // Açıklama metnindeki "---" satırları adımları ayırır: ilk parça çözümün fikri,
 // sonrakiler sırasıyla adımlar (content/sorular/tipler.ts ADIM_AYIRICI).
 export function cozumParcalari(metin: string): { fikir: string; adimlar: string[] } {
-  const [fikir = "", ...adimlar] = metin.replace(/\\n/g, "\n").split(/\n[ \t]*---[ \t]*\n/).map((p) => p.trim());
+  const [fikir = "", ...adimlar] = satirSonlari(metin).split(/\n[ \t]*---[ \t]*\n/).map((p) => p.trim());
   return { fikir, adimlar: adimlar.filter(Boolean) };
 }
 
