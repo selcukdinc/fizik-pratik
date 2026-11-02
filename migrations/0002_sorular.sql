@@ -1,5 +1,7 @@
 -- Bu dosya scripts/sorular-sql.ts ile content/sorular'dan üretildi, elle düzenlemeyin.
 
+INSERT INTO topics (id, title, week, sort) VALUES ('u1', 'Ölçme ve Birim Sistemleri', 1, 1)
+  ON CONFLICT(id) DO UPDATE SET title = excluded.title, week = excluded.week, sort = excluded.sort;
 INSERT INTO topics (id, title, week, sort) VALUES ('u2', 'Vektörler', 2, 1)
   ON CONFLICT(id) DO UPDATE SET title = excluded.title, week = excluded.week, sort = excluded.sort;
 INSERT INTO topics (id, title, week, sort) VALUES ('u3', 'Bir Boyutta Hareket', 3, 1)
@@ -9,6 +11,284 @@ INSERT INTO topics (id, title, week, sort) VALUES ('u4', 'İki Boyutta Hareket',
 INSERT INTO topics (id, title, week, sort) VALUES ('u5', 'Newton Kanunları', 5, 1)
   ON CONFLICT(id) DO UPDATE SET title = excluded.title, week = excluded.week, sort = excluded.sort;
 
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-s01', 'u1', 1, 'mcq', 'original', 'v = v₀ + at ifadesinin boyutunun doğruluğunu gösteriniz. Buna göre at teriminin boyutu nedir?', '{"choices":["[L/T]; hızın boyutuyla aynı olduğu için denklem tutarlıdır","[L/T²]; denklem tutarsızdır","[L]; denklem tutarsızdır","[L·T]; denklem tutarsızdır","[L/T]; ama v₀ boyutsuz olduğu için denklem tutarsızdır"]}', '{"index":0}', 'Bir eşitliğin bütün terimleri aynı boyutta olmalıdır; toplanan terimler de birbiriyle aynı boyutta olmalıdır. Her terimin boyutunu temel boyutlar (L, T) cinsinden yaz ve karşılaştır.
+
+---
+
+**Sol taraf:** v hızdır: [v] = L/T.
+
+---
+
+**İlk terim:** v₀ da hızdır: [v₀] = L/T.
+
+---
+
+**İkinci terim:** ivme [a] = L/T², zaman [t] = T. Çarpım: [at] = (L/T²) · T = L/T.
+
+---
+
+**Karşılaştır:** L/T = L/T + L/T. Üç terim de hız boyutunda, eşitlik boyutça doğrudur.', 1, 'Sunu, Bölüm 1, Örnek 1', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-s02', 'u1', 1, 'mcq', 'original', 'Katı bir kübün kütlesi 856 g ve her bir kenarı 5,35 cm uzunluğa sahiptir. SI birim sisteminde kübün yoğunluğunu bulunuz.', '{"choices":["≈ 5,59 × 10³ kg/m³","≈ 5,59 × 10⁻³ kg/m³","≈ 5,59 kg/m³","≈ 160 kg/m³","≈ 5,59 × 10⁶ kg/m³"]}', '{"index":0}', 'Önce kütleyi kg''a, kenarı m''ye çevir; hacmi kenarın küpüyle bul; sonra ρ = m / V. Not: sunu sonucu 5,59 × 10⁻³ kg/m³ yazmış; 0,856 / (1,53 × 10⁻⁴) = 5,59 × 10³ kg/m³''tür (5,59 g/cm³, demirden biraz hafif).
+
+---
+
+**Kütle:** m = 856 g × 10⁻³ kg/g = 0,856 kg.
+
+---
+
+**Kenar:** L = 5,35 cm × 10⁻² m/cm = 5,35 × 10⁻² m.
+
+---
+
+**Hacim:** V = L³ = (5,35 × 10⁻²)³ m³ ≈ 153 × 10⁻⁶ m³ = 1,53 × 10⁻⁴ m³. Dikkat: 10⁻²''nin küpü 10⁻⁶''dır.
+
+---
+
+**Yoğunluk:** ρ = 0,856 / (1,53 × 10⁻⁴) ≈ 5,59 × 10³ kg/m³.
+
+---
+
+**Kontrol:** g/cm³ ile: 856 / 5,35³ = 856 / 153 ≈ 5,59 g/cm³; 1 g/cm³ = 1000 kg/m³ olduğundan 5,59 × 10³ kg/m³ ✓.', 2, 'Sunu, Bölüm 1, Örnek 2', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t01', 'u1', 1, 'mcq', 'derived', 'Mekanikte kullanılan üç temel büyüklük hangileridir?', '{"choices":["Uzunluk, kütle, zaman","Uzunluk, kuvvet, zaman","Kütle, hız, zaman","Uzunluk, kütle, sıcaklık","Kuvvet, enerji, zaman"]}', '{"index":0}', 'Mekanikteki bütün nicelikler uzunluk [L], kütle [M] ve zaman [T] cinsinden yazılabilir. Hız, kuvvet ve enerji bunlardan türetilir.', 1, '1. bölüm, Temel büyüklükler ve SI birimleri', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t02', 'u1', 1, 'mcq', 'derived', 'Aşağıdakilerden hangisi SI sistemindeki 7 temel birimden biri değildir?', '{"choices":["Newton","Kelvin","Amper","Mol","Kandela"]}', '{"index":0}', 'SI''nın 7 temel birimi: metre, kilogram, saniye, amper, kelvin, mol, kandela. Newton türetilmiş bir birimdir: 1 N = 1 kg·m/s².', 1, '1. bölüm, Temel büyüklükler ve SI birimleri', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t03', 'u1', 1, 'fill', 'derived', 'SI sisteminde sıcaklığın birimi ____, madde miktarının birimi ____''dür.
+
+Boşluk 1: sıcaklık, Boşluk 2: madde miktarı', '{"blanks":2}', '{"blanks":[["kelvin","K"],["mol"]]}', 'Sıcaklık **kelvin** (K), madde miktarı **mol**. Diğer temel birimler: metre (m), kilogram (kg), saniye (s), amper (A), kandela (cd).', 1, '1. bölüm, Temel büyüklükler ve SI birimleri', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t04', 'u1', 1, 'mcq', 'derived', 'Sunudaki tanıma göre 1 saniye nasıl tanımlanır?', '{"choices":["Sezyum-133 atomunun 9 192 631 770 titreşiminin süresi","Bir günün 86 400''de biri","Işığın 1 metreyi alma süresi","Bir sarkacın bir tam salınım süresi","Dünyanın Güneş çevresindeki turunun 3,2 × 10⁷''de biri"]}', '{"index":0}', '1967''den beri saniye atomik saatle tanımlanır: sezyum-133 atomunun 9 192 631 770 titreşimi 1 s''dir. Metre de buna dayanır: ışığın vakumda 1/299 792 458 saniyede aldığı yol.', 2, '1. bölüm, Temel büyüklükler ve SI birimleri', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t05', 'u1', 1, 'tf', 'derived', 'Bir ölçümün sonucu birimi yazılmadan da tam olarak anlaşılabilir; örneğin "masanın boyu 90" demek yeterlidir.', '{}', '{"value":false}', 'Her ölçüm sonucu birimiyle verilmelidir. "90" santimetre mi, inç mi belli değildir; "90 cm" anlamlıdır.', 1, '1. bölüm, Temel büyüklükler ve SI birimleri', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t06', 'u1', 1, 'mcq', 'derived', '"mikro" ön ekinin anlamı ve sembolü nedir?', '{"choices":["10⁻⁶, μ","10⁻³, m","10⁻⁹, n","10⁶, M","10⁻¹², p"]}', '{"index":0}', 'Alt katlar: mili (m) 10⁻³, mikro (μ) 10⁻⁶, nano (n) 10⁻⁹, piko (p) 10⁻¹². Üst katlarda mega (M) 10⁶; büyük M ile küçük m''yi karıştırma.', 1, '1. bölüm, 10''un katları ve birim çevirme', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t07', 'u1', 1, 'mcq', 'derived', '72 km/sa kaç m/s''dir?', '{"choices":["20 m/s","72 000 m/s","259,2 m/s","7,2 m/s","2 m/s"]}', '{"index":0}', '1 km = 1000 m, 1 saat = 3600 s. Birimleri kesir gibi çarpanlarla çevir; kısa yol: km/sa ÷ 3,6 = m/s.
+
+---
+
+**Çarpanlar:** 72 km/sa × (1000 m / 1 km) × (1 sa / 3600 s).
+
+---
+
+**Hesap:** 72 000 / 3600 = 20 m/s.
+
+---
+
+**Tuzak:** 72 × 3,6 = 259,2; çevirme yönünü ters almak.', 2, '1. bölüm, 10''un katları ve birim çevirme', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t08', 'u1', 1, 'mcq', 'derived', '1 cm³ kaç m³''tür?', '{"choices":["10⁻⁶ m³","10⁻² m³","10⁻³ m³","10⁻⁴ m³","10⁻⁹ m³"]}', '{"index":0}', 'Hacim uzunluğun küpüdür; çevirme çarpanının da küpü alınır.
+
+---
+
+**Uzunluk:** 1 cm = 10⁻² m.
+
+---
+
+**Küp:** 1 cm³ = (10⁻² m)³ = 10⁻⁶ m³.', 2, '1. bölüm, 10''un katları ve birim çevirme', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t09', 'u1', 1, 'mcq', 'derived', 'Bir yarış pisti 5 mil uzunluğundadır. Bu uzunluk kaç km''dir? (1 mil = 1609 m)', '{"choices":["≈ 8,0 km","≈ 3,1 km","8045 km","≈ 0,8 km","≈ 80 km"]}', '{"index":0}', '1 mil = 1,609 km. Mil, km''den uzun olduğu için km cinsinden sayı büyümelidir.
+
+---
+
+**Çarp:** 5 × 1609 m = 8045 m.
+
+---
+
+**km:** 8045 m = 8,045 km ≈ 8,0 km.', 2, '1. bölüm, 10''un katları ve birim çevirme', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t10', 'u1', 1, 'fill', 'derived', '1 inç 2,54 cm''dir. 10 inç kaç santimetredir? (Yalnız sayıyı yazın.)', '{"blanks":1}', '{"blanks":[["25,4","25.4","25,4 cm"]]}', '10 × 2,54 cm = 25,4 cm.', 2, '1. bölüm, 10''un katları ve birim çevirme', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t11', 'u1', 1, 'mcq', 'derived', '5 mg kütle kaç kg''dır?', '{"choices":["5 × 10⁻⁶ kg","5 × 10⁻³ kg","5 × 10⁻⁹ kg","5 × 10³ kg","5 × 10⁻⁴ kg"]}', '{"index":0}', 'Mili 10⁻³ demektir: 1 mg = 10⁻³ g. Gramı da kg''a çevirmek için bir 10⁻³ daha gerekir.
+
+---
+
+**mg → g:** 5 mg = 5 × 10⁻³ g.
+
+---
+
+**g → kg:** 5 × 10⁻³ × 10⁻³ kg = 5 × 10⁻⁶ kg.', 2, '1. bölüm, 10''un katları ve birim çevirme', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t12', 'u1', 1, 'mcq', 'derived', 'İvmenin boyutu nedir?', '{"choices":["[L/T²]","[L/T]","[L·T²]","[M·L/T²]","[L²/T]"]}', '{"index":0}', 'İvme hızın zamana bölümüdür: (L/T) / T = L/T². [M·L/T²] kuvvetin boyutudur.', 1, '1. bölüm, Boyut ve boyut analizi', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t13', 'u1', 1, 'mcq', 'derived', 'x uzunluk, v hız, t zaman ve a ivme olmak üzere aşağıdaki eşitliklerden hangisi boyutça tutarsızdır?', '{"choices":["x = v t²","x = v t","v² = 2 a x","x = ½ a t²","v = a t"]}', '{"index":0}', 'Her terimin boyutunu yaz: iki taraf aynı çıkmazsa eşitlik kesinlikle yanlıştır. (Boyutça tutarlı olmak doğruluğun garantisi değildir; sayısal çarpanları denetlemez.)
+
+---
+
+**x = v t²:** sağ taraf (L/T) · T² = L·T, sol taraf L. Tutarsız.
+
+---
+
+**v² = 2ax:** (L/T)² = L²/T²; sağ taraf (L/T²) · L = L²/T². Tutarlı.
+
+---
+
+**x = ½at²:** (L/T²) · T² = L. Tutarlı (½ boyutsuzdur).', 2, '1. bölüm, Boyut ve boyut analizi', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t14', 'u1', 1, 'tf', 'derived', 'Boyut analizi bir eşitlikteki ½ veya 2π gibi sayısal çarpanların doğru olup olmadığını gösterir.', '{}', '{"value":false}', 'Sayısal çarpanlar boyutsuzdur; boyut analizi onları göremez. x = at² ve x = ½at² ikisi de boyutça tutarlıdır ama yalnız ikincisi doğrudur.', 2, '1. bölüm, Boyut ve boyut analizi', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t15', 'u1', 1, 'mcq', 'derived', 'Bir sarkacın periyodu T''nin, ipin uzunluğu ℓ ve yerçekimi ivmesi g''ye T ∝ ℓᵐ gⁿ biçiminde bağlı olduğu biliniyor. Boyut analizine göre m ve n nedir?', '{"choices":["m = ½, n = −½","m = 1, n = −1","m = −½, n = ½","m = ½, n = ½","m = 2, n = −1"]}', '{"index":0}', 'İki tarafın boyutlarını eşitle: [T] = Lᵐ (L/T²)ⁿ. L''nin ve T''nin üsleri ayrı ayrı eşit olmalı.
+
+---
+
+**Sağ taraf:** Lᵐ · Lⁿ · T⁻²ⁿ = Lᵐ⁺ⁿ T⁻²ⁿ.
+
+---
+
+**T için:** sol taraf T¹ → −2n = 1 → n = −½.
+
+---
+
+**L için:** sol tarafta L yok → m + n = 0 → m = ½.
+
+---
+
+**Sonuç:** T ∝ √(ℓ/g). (Gerçek formül T = 2π√(ℓ/g); 2π''yi boyut analizi veremez.)', 3, '1. bölüm, Boyut ve boyut analizi', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t16', 'u1', 1, 'mcq', 'derived', 'Alüminyumun yoğunluğu 2,7 g/cm³''tür. 20 cm³ hacmindeki bir alüminyum parçanın kütlesi nedir?', '{"choices":["54 g","7,4 g","22,7 g","540 g","0,135 g"]}', '{"index":0}', 'ρ = m / V''den m = ρV.
+
+---
+
+**Hesap:** m = 2,7 g/cm³ × 20 cm³ = 54 g.', 2, '1. bölüm, Yoğunluk', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t17', 'u1', 1, 'mcq', 'derived', 'Kurşunun yoğunluğu 11,3 g/cm³''tür. Bu değer SI biriminde kaçtır?', '{"choices":["11 300 kg/m³","11,3 kg/m³","0,0113 kg/m³","1130 kg/m³","113 000 kg/m³"]}', '{"index":0}', '1 g/cm³ = 10⁻³ kg / 10⁻⁶ m³ = 10³ kg/m³. Yani g/cm³''ten kg/m³''e geçerken 1000 ile çarpılır.
+
+---
+
+**Çevirme:** 1 g/cm³ = (10⁻³ kg) / (10⁻⁶ m³) = 1000 kg/m³.
+
+---
+
+**Sonuç:** 11,3 × 1000 = 11 300 kg/m³.', 2, '1. bölüm, Yoğunluk', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t18', 'u1', 1, 'tf', 'derived', 'Alüminyum ile kurşunun yoğunlukları arasındaki fark yalnızca atom kütlelerinin farklı olmasından kaynaklanır.', '{}', '{"value":false}', 'Atom kütlesi farkı (Al: 27, Pb: 207) yoğunluk farkının bir kısmını açıklar. Kalanı kristal yapıdaki atomlar arası uzaklık ve diziliş farkından gelir.', 2, '1. bölüm, Yoğunluk', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t19', 'u1', 1, 'mcq', 'derived', '0,00000039 sayısında kaç anlamlı rakam vardır?', '{"choices":["2","8","9","7","3"]}', '{"index":0}', 'Baştaki sıfırlar yalnız ondalık noktanın yerini gösterir, anlamlı değildir. 3,9 × 10⁻⁷ yazınca iki anlamlı rakam olduğu görülür.', 1, '1. bölüm, Anlamlı rakamlar', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t20', 'u1', 1, 'mcq', 'derived', 'Uzunluğu 16,3 cm, genişliği 4,5 cm ölçülen bir plakanın alanı anlamlı rakam kurallarına göre nasıl yazılmalıdır?', '{"choices":["73 cm²","73,35 cm²","73,4 cm²","70 cm²","73,3 cm²"]}', '{"index":0}', 'Çarpma ve bölmede sonuç, en az anlamlı rakamı olan çarpan kadar anlamlı rakam taşır.
+
+---
+
+**Çarpım:** 16,3 × 4,5 = 73,35.
+
+---
+
+**Anlamlı rakamlar:** 16,3 üç, 4,5 iki anlamlı rakamlı. Sonuç iki anlamlı rakamla yazılır.
+
+---
+
+**Sonuç:** 73 cm².', 2, '1. bölüm, Anlamlı rakamlar', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t21', 'u1', 1, 'mcq', 'derived', '9,12 − 5,4917 işleminin sonucu anlamlı rakam kurallarına göre nasıl yazılır?', '{"choices":["3,63","3,6283","3,628","3,6","4"]}', '{"index":0}', 'Toplama ve çıkarmada sonuç, ondalık basamak sayısı en az olan terim kadar ondalık basamakla yazılır.
+
+---
+
+**İşlem:** 9,12 − 5,4917 = 3,6283.
+
+---
+
+**Basamak:** 9,12''nin iki ondalık basamağı var; sonuç iki ondalığa yuvarlanır: 3,63.', 2, '1. bölüm, Anlamlı rakamlar', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
+INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
+VALUES ('u1-t22', 'u1', 1, 'tf', 'derived', '2,70 sayısının sonundaki sıfır anlamlıdır; sayı üç anlamlı rakam içerir.', '{}', '{"value":true}', 'Ondalık kısımda sona yazılan sıfır ölçülmüş demektir: 2,70, ölçümün yüzde birler basamağına kadar yapıldığını söyler. Bu yüzden üç anlamlı rakam vardır.', 2, '1. bölüm, Anlamlı rakamlar', 1)
+  ON CONFLICT(id) DO UPDATE SET topic_id = excluded.topic_id, week = excluded.week, type = excluded.type,
+    source = excluded.source, prompt = excluded.prompt, payload = excluded.payload, answer = excluded.answer,
+    explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
+  WHERE questions.updated_at IS NULL;
 INSERT INTO questions (id, topic_id, week, type, source, prompt, payload, answer, explanation, difficulty, source_ref, active)
 VALUES ('u2-s01', 'u2', 2, 'mcq', 'original', 'Bir noktanın Kartezyen koordinatları (x, y) = (−3,5; −2,5) m olarak verilmektedir. Bu noktanın kutupsal koordinatlarını (r, θ) bulun.', '{"choices":["r = 4,3 m; θ = 216°","r = 4,3 m; θ = 36°","r = 6,0 m; θ = 216°","r = 4,3 m; θ = 144°","r = 18,5 m; θ = 216°"]}', '{"index":0}', 'Kutupsal koordinatta r orijine uzaklık, θ ise +x ekseninden saat yönünün tersine ölçülen açıdır. tan θ iki açı verir; doğrusunu noktanın hangi çeyrekte olduğu seçer.
 
@@ -3680,6 +3960,30 @@ VALUES ('u5-t27', 'u5', 5, 'tf', 'derived', 'Düzgün dairesel hareket yapan bir
     explanation = excluded.explanation, difficulty = excluded.difficulty, source_ref = excluded.source_ref, active = 1
   WHERE questions.updated_at IS NULL;
 
+UPDATE questions SET kavram = 'u1-boyut', yedek = 0, etiketler = 'sunu' WHERE id = 'u1-s01';
+UPDATE questions SET kavram = 'u1-yogunluk', yedek = 0, etiketler = 'sunu' WHERE id = 'u1-s02';
+UPDATE questions SET kavram = 'u1-si', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t01';
+UPDATE questions SET kavram = 'u1-si', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t02';
+UPDATE questions SET kavram = 'u1-si', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t03';
+UPDATE questions SET kavram = 'u1-si', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t04';
+UPDATE questions SET kavram = 'u1-si', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t05';
+UPDATE questions SET kavram = 'u1-onek', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t06';
+UPDATE questions SET kavram = 'u1-onek', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t07';
+UPDATE questions SET kavram = 'u1-onek', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t08';
+UPDATE questions SET kavram = 'u1-onek', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t09';
+UPDATE questions SET kavram = 'u1-onek', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t10';
+UPDATE questions SET kavram = 'u1-onek', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t11';
+UPDATE questions SET kavram = 'u1-boyut', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t12';
+UPDATE questions SET kavram = 'u1-boyut', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t13';
+UPDATE questions SET kavram = 'u1-boyut', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t14';
+UPDATE questions SET kavram = 'u1-boyut', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t15';
+UPDATE questions SET kavram = 'u1-yogunluk', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t16';
+UPDATE questions SET kavram = 'u1-yogunluk', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t17';
+UPDATE questions SET kavram = 'u1-yogunluk', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t18';
+UPDATE questions SET kavram = 'u1-anlamli', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t19';
+UPDATE questions SET kavram = 'u1-anlamli', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t20';
+UPDATE questions SET kavram = 'u1-anlamli', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t21';
+UPDATE questions SET kavram = 'u1-anlamli', yedek = 0, etiketler = 'turetilmis' WHERE id = 'u1-t22';
 UPDATE questions SET kavram = 'u2-koordinat', yedek = 0, etiketler = 'sunu' WHERE id = 'u2-s01';
 UPDATE questions SET kavram = 'u2-bilesen', yedek = 0, etiketler = 'sunu' WHERE id = 'u2-s02';
 UPDATE questions SET kavram = 'u2-bilesen', yedek = 0, etiketler = 'sunu' WHERE id = 'u2-s03a';

@@ -7,6 +7,13 @@ export interface Kavram {
 }
 
 export const KAVRAMLAR: Record<string, Kavram> = {
+  // 1. bölüm: Ölçme ve Birim Sistemleri
+  "u1-si": { ad: "Temel büyüklükler ve SI birimleri" },
+  "u1-onek": { ad: "10'un katları ve birim çevirme" },
+  "u1-boyut": { ad: "Boyut ve boyut analizi" },
+  "u1-yogunluk": { ad: "Yoğunluk" },
+  "u1-anlamli": { ad: "Anlamlı rakamlar" },
+
   // 2. bölüm: Vektörler
   "u2-skaler": { ad: "Skaler ve vektörel büyüklükler" },
   "u2-koordinat": { ad: "Kartezyen ve kutupsal koordinatlar" },

@@ -13,7 +13,7 @@ export function About() {
       </p>
       <h3>Kaynak</h3>
       <p>
-        Sorular Fizik I ders notlarındaki (Bölüm 2-5) çözümlü örneklere dayanır. Örnek metinleri sunudaki gibi, şıklar ve adım
+        Sorular Fizik I ders notlarındaki (Bölüm 1-5) çözümlü örneklere dayanır. Örnek metinleri sunudaki gibi, şıklar ve adım
         adım çözümler bizim yazımımızdır; sunudaki hesap hataları düzeltilmiş ve çözümde belirtilmiştir. Şekiller sunudan alınmadı,
         yeniden çizildi. Sunu dosyaları sitede ve depoda yer almaz.
       </p>

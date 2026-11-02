@@ -1,11 +1,11 @@
-// Fizik I ders sunularının bölümleri. Sunular 2. bölümden başlar; 1. bölümün
-// (Fizik ve Ölçme) sunusu gelirse buraya eklenir.
+// Fizik I ders sunularının bölümleri.
 export interface Unite {
   no: number;
   baslik: string;
 }
 
 export const UNITELER: Unite[] = [
+  { no: 1, baslik: "Ölçme ve Birim Sistemleri" },
   { no: 2, baslik: "Vektörler" },
   { no: 3, baslik: "Bir Boyutta Hareket" },
   { no: 4, baslik: "İki Boyutta Hareket" },

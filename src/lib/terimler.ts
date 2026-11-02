@@ -14,6 +14,11 @@ export interface Terim {
 }
 
 export const TERIMLER: Terim[] = [
+  { tr: "SI birim sistemi", en: "International System of Units (SI)", aciklama: "Uluslararası birim sistemi; 7 temel birimi var (m, kg, s, A, K, mol, cd)" },
+  { tr: "temel büyüklük", en: "fundamental quantity", aciklama: "Başka niceliklerden türetilmeyen büyüklük; mekanikte uzunluk, kütle ve zaman" },
+  { tr: "boyut analizi", en: "dimensional analysis", aciklama: "Eşitliğin iki tarafının aynı boyutta ([L], [M], [T]) olup olmadığını denetleme" },
+  { tr: "yoğunluk", en: "density", aciklama: "Birim hacimdeki kütle, ρ = m/V" },
+  { tr: "anlamlı rakam", en: "significant figure", aciklama: "Bir ölçümde güvenilir olan rakamlar ve tahmine dayanan son rakam" },
   { tr: "skaler", en: "scalar", aciklama: "Yalnız büyüklüğü olan nicelik: kütle, zaman, sürat, enerji" },
   { tr: "vektör", en: "vector", aciklama: "Büyüklüğü ve yönü olan nicelik: yerdeğiştirme, hız, ivme, kuvvet" },
   { tr: "birim vektör", en: "unit vector", aciklama: "Büyüklüğü 1 olan, yalnız yön belirten boyutsuz vektör (î, ĵ, k̂)" },

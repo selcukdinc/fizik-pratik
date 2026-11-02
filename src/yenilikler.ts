@@ -18,7 +18,7 @@ export const YENILIKLER: Yenilik[] = [
     tarih: "2026-11-02",
     baslik: "Fizik Pratik açıldı",
     maddeler: [
-      "Ders sunularının 2–5. bölümlerindeki (Vektörler, Bir Boyutta Hareket, İki Boyutta Hareket, Newton Kanunları) bütün çözümlü örnekler sitede. Çok parçalı örnekler parça parça soruya bölündü; bu sorular **Sunu** etiketi taşır.",
+      "Ders sunularının 1–5. bölümlerindeki (Ölçme ve Birim Sistemleri, Vektörler, Bir Boyutta Hareket, İki Boyutta Hareket, Newton Kanunları) bütün çözümlü örnekler sitede. Çok parçalı örnekler parça parça soruya bölündü; bu sorular **Sunu** etiketi taşır.",
       "Her sunu örneğinin yanında aynı kalıptan ve aynı konulardan yazılmış **Türetilmiş** sorular var. Yalnız sunu örnekleriyle çalışmak istersen kaynak seçiminden \"Sunu örnekleri\"ni seç.",
       "Her sorunun çözümü **adım adım**: önce çözümün fikri, sonra adımlar. Bir sonraki adımı açmadan önce kendin bulmayı deneyebilir, istersen hepsini birden açabilirsin.",
       "Şekilli sorular şekilleriyle geliyor: eğik atışlar, eğik düzlemler, makaralar, asılı lambalar. Şekiller açık ve koyu temaya uyar.",
