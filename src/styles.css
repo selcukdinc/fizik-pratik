@@ -309,7 +309,7 @@ code { background: var(--code-bg); padding: 0 3px; border-radius: 3px; }
 .choice-letter { font-weight: 600; }
 .q-ref { font-size: 11px; color: var(--muted); margin-left: auto; }
 .question footer { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 6px; }
-.question footer .md { flex-basis: 100%; }
+.question footer .md, .question footer .cozum { flex-basis: 100%; }
 .ok { color: var(--green); }
 .bad { color: var(--error); }
 .md pre.code { background: var(--pre-bg); border: 1px solid var(--pre-border); padding: 8px; overflow-x: auto; }
@@ -1229,3 +1229,12 @@ body.boyutlaniyor-dikey { cursor: ns-resize; user-select: none; }
 .sk-turuncu-d { fill: var(--sk-turuncu); stroke: none; }
 .sk-siyah-d { fill: var(--sk-cizgi); stroke: none; }
 .sk-yay { stroke: var(--sk-cizgi); stroke-width: 1.3; fill: none; }
+
+/* Formüller (KaTeX). Ayrı satır formüller dar ekranda yatay kaydırılır, sayfayı taşırmaz. */
+.mat .katex { font-size: 1.08em; }
+.mat-blok { display: block; overflow-x: auto; overflow-y: hidden; margin: 0.5em 0; padding: 0.15em 0; max-width: 100%; }
+.mat-blok .katex-display { margin: 0; }
+.choices .mat .katex { font-size: 1.04em; }
+.cozum-adim .mat-blok { margin: 0.35em 0; }
+/* Uzun formüller çözüm kutusunu genişletmesin; yalnız formül yana kaysın */
+.cozum, .cozum > *, .cozum-adimlar ol > li, .cozum-adim > * { min-width: 0; max-width: 100%; }

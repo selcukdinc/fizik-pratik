@@ -14,6 +14,17 @@ export interface Yenilik {
 
 export const YENILIKLER: Yenilik[] = [
   {
+    pr: 2,
+    tarih: "2026-11-02",
+    baslik: "Formüller ders kitabındaki gibi",
+    maddeler: [
+      "Sorulardaki, şıklardaki ve çözümlerdeki bütün formüller artık ders kitabındaki gibi dizilir: kesirler üst üste, kökler gerçek kök işaretiyle, üsler ve alt indisler yerinde.",
+      "Çözüm adımlarındaki ana hesap kendi satırında, ortalanmış olarak gelir; uzun bir işlemi tek satırda takip etmek zorunda kalmazsın.",
+      "Vektörler okla ($\\vec{A}$), birim vektörler şapkayla ($\\hat{\\imath}$, $\\hat{\\jmath}$, $\\hat{k}$), açılar derece işaretiyle yazılır; sayılarda ondalık virgül kullanılır.",
+      "Telefonda sığmayan uzun bir formül sayfayı bozmaz; yalnız formül yana kaydırılır.",
+    ],
+  },
+  {
     pr: 1,
     tarih: "2026-11-02",
     baslik: "Fizik Pratik açıldı",

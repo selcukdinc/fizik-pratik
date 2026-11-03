@@ -2,6 +2,8 @@ import { Fragment, type ReactNode } from "react";
 import { terimleriAyir } from "../lib/terimler";
 import { SEKIL_DESENI } from "../gorseller";
 import { Sekil } from "./Sekil";
+import { matematikHtml, satirSonlari } from "../lib/matematik";
+import "katex/dist/katex.min.css";
 
 // Düz metindeki terimlerin ardına İngilizce karşılıklarını ekler: "VE (AND)"
 function terimli(metin: string): ReactNode {
@@ -38,16 +40,24 @@ export function indisli(metin: string): ReactNode {
 }
 
 // Soru ve ders metinleri için küçük bir alt küme: ``` kod blokları, `satır içi kod`,
-// **kalın**, "- " ile başlayan satırlardan madde listesi, "1. " ile başlayan
+// **kalın**, $formül$ ve $$ayrı satırda formül$$ (KaTeX, src/lib/matematik.ts), "- " ile başlayan satırlardan madde listesi, "1. " ile başlayan
 // satırlardan sıralı liste, "|" ile başlayan satırlardan tablo, "> " ile başlayan
 // satırlardan not kutusu ve tek başına [[G-H1-01]] yazılan paragraflardan şekil.
 // terim: ders ve soru metinlerinde terimlerin İngilizcesi gösterilir; kod
 // parçalarına dokunulmaz.
 export function inline(text: string, terim = false): ReactNode[] {
   const duz = (s: string) => (/[_^]/.test(s) ? indisli(s) : terim ? terimli(s) : s);
-  return text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, i) => {
+  return text.split(/(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$|`[^`]+`|\*\*[^*]+\*\*)/g).map((part, i) => {
+    if (part.length > 2 && part.startsWith("$") && part.endsWith("$")) {
+      const { html, blok } = matematikHtml(part);
+      return <span key={i} className={blok ? "mat-blok" : "mat"} dangerouslySetInnerHTML={{ __html: html }} />;
+    }
     if (part.startsWith("`") && part.endsWith("`")) return <code key={i}>{part.slice(1, -1)}</code>;
-    if (part.startsWith("**") && part.endsWith("**")) return <strong key={i}>{duz(part.slice(2, -2))}</strong>;
+    if (part.startsWith("**") && part.endsWith("**")) {
+      const ic = part.slice(2, -2);
+      // "**$F_x$:**" gibi etiketlerde formül kalın yazının içinde de dizilsin
+      return <strong key={i}>{ic.includes("$") ? inline(ic, terim) : duz(ic)}</strong>;
+    }
     return <Fragment key={i}>{duz(part)}</Fragment>;
   });
 }
@@ -116,7 +126,7 @@ function bloklar(text: string, key: string, terim: boolean): ReactNode[] {
 }
 
 export function Markdown({ text, terim = false }: { text: string; terim?: boolean }) {
-  const blocks = text.replace(/\\n/g, "\n").split(/```(?:vhdl)?\n?([\s\S]*?)```/g);
+  const blocks = satirSonlari(text).split(/```(?:vhdl)?\n?([\s\S]*?)```/g);
   return (
     <div className="md">
       {blocks.map((b, i) =>

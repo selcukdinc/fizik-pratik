@@ -2,12 +2,13 @@
 // en çok yanlış yapılan sorular ve kod sorularında en sık takılınan kontrol noktaları.
 
 import { useEffect, useState } from "react";
+import { ozetMetin } from "../lib/matematik";
 import { api } from "../lib/api";
 import { href } from "../lib/router";
 import { inline } from "./Markdown";
 import type { PanelOzet, PanelPano } from "../../shared/yonetim";
 
-const kisa = (p: string) => p.replace(/```[\s\S]*?```/g, "[kod]").replace(/\s+/g, " ").slice(0, 90);
+const kisa = (p: string) => ozetMetin(p, 90);
 const gunEtiketi = (g: string) => new Date(`${g}T12:00:00`).toLocaleDateString("tr-TR", { weekday: "short" });
 
 interface Props {

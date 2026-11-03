@@ -1,6 +1,7 @@
 // /yonetim: genel ayarlar, soru listesi, öneriler, mesajlar, kullanıcılar, ders şekilleri ve işlem kaydı
 
 import { useEffect, useState, type FormEvent } from "react";
+import { ozetMetin } from "../lib/matematik";
 import { api } from "../lib/api";
 import { href, navigate, type YonetimBolumu } from "../lib/router";
 import { useOturum } from "../lib/oturum";
@@ -211,7 +212,7 @@ function SoruListesi() {
                       <span className="tag">H{s.week}</span>
                       {s.updatedAt && <span className="tag" title="Panelde değiştirildi">panel</span>}
                       {s.yedek && <span className="tag" title="Soru listesinde görünmez, aralıklı tekrarda gelir">yedek</span>}
-                      <div className="panel-ozet">{inline(s.prompt.replace(/```[\s\S]*?```/g, "[kod]").slice(0, 140))}</div>
+                      <div className="panel-ozet">{inline(ozetMetin(s.prompt, 140))}</div>
                       <div className="hint">{konuAdi.get(s.topicId)}</div>
                     </td>
                     <td>{TUR[s.type]}</td>
@@ -375,7 +376,7 @@ function OneriListesi() {
                 <span className="hint">@{o.username ?? "silinmiş"} · {o.topicTitle} · {zaman(o.createdAt)}</span>
               </div>
               <a className="oneri-metni" href={href({ page: "yonetim", bolum: "oneriler", alt: o.id })}>
-                {inline(o.prompt.replace(/```[\s\S]*?```/g, "[kod]").slice(0, 200))}
+                {inline(ozetMetin(o.prompt, 200))}
               </a>
             </li>
           ))}

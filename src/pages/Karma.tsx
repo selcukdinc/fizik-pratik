@@ -3,6 +3,7 @@
 // hesaplanır; cevaplar soru havuzundaki gibi ilerlemeye ve tekrara işlenir.
 
 import { useEffect, useMemo, useState } from "react";
+import { ozetMetin } from "../lib/matematik";
 import { api } from "../lib/api";
 import { href } from "../lib/router";
 import { inline } from "../components/Markdown";
@@ -231,7 +232,4 @@ export function Karma({ topics }: { topics: Topic[] }) {
   );
 }
 
-function ozet(prompt: string): string {
-  const s = prompt.replace(/[`*_#>]/g, "").replace(/\s+/g, " ").trim();
-  return s.length > 110 ? `${s.slice(0, 109)}…` : s;
-}
+const ozet = (prompt: string) => ozetMetin(prompt.replace(/\*\*/g, ""), 110);
